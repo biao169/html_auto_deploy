@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Projects Patents</title>
+    <style>
+        /* .div-image{
+            display: none;
+        } */
+        body{
+            max-height: 100%;
+            max-width: 100%;
+            padding: 10px 10px;
+            margin: 0 0;
+            /* overflow: hidden; */
+            overflow-x: hidden;
+        }
+        main{
+            /* z-index: 1; */
+            height: auto;
+            width: auto;
+            max-width: 100%;
+            padding: 0px 10px;
+            margin: 0;
+            max-width: 1280px;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            user-select: auto;
+        }
+        main div.main-title{
+            display: flex;
+            flex-direction: row;
+            align-items: center; /* 新增代码：使标题居中对齐 */
+            margin: 10px 0; /* 新增代码：添加上下外边距 */
+        }
+        h1, h2 {
+            margin: 0 5px; /* 修改代码：为标题添加一些空白 */
+            font-size: 20px;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 30%;
+            background-color: #b9bdc9;
+            border: none;
+            outline: none;
+            color: yellow;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease-out;
+        }
+
+        button:hover {
+            background-color: #3ef507;
+            /* background-color: rgba(currentColor, 0.8, 0.2, 0.8); */
+        }
+        
+        main #div-container{
+            display: flex;
+            position: relative;
+            align-items: center;  
+            flex-direction: column-reverse;
+            height: auto;
+            width: calc(100%);
+            /* min-height: 100%; */
+            max-width: 100%;
+            margin: 10px 0px; /* 新增代码：添加上下外边距 */
+            padding: 0px 0px;
+            /* border: 1px solid rgb(104, 97, 161); */
+        }
+        .div-one-paper{
+            display: flex;
+            position: relative;
+            align-items: center;     
+            flex-direction: row;
+            max-width: 100%;
+            height: auto;
+            min-height: 100%;
+            /* margin: 5px 10px; */
+            /* border: 1px solid rgb(114, 112, 133); */
+        }
+        /* 在元素内部设置分割线 */
+        .div-one-paper ::before{
+            content: "";
+            position: absolute;
+            /* z-index: 0; */
+            top: 0;
+            left: 0px; 
+            right: 0px;
+            height: 1px;
+            width: auto;
+            /* border-top: 1px solid rgb(221, 221, 221);  */
+        }
+        /* 隐藏第一个元素的分割线 */
+        .div-one-paper:first-child::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0px; 
+            right: 0px;
+            height: 1px;
+            width: auto;
+            /* border-top: 1px solid rgb(221, 221, 221);  */
+        }
+        .div-index{
+            width: 50px;
+            height: auto;
+            margin: 0px 0px;
+            padding: 0px 5px;
+            min-width: 30px;
+            max-width: 100px;
+            display: flex;
+            justify-content:center;
+            align-items: center;  
+            flex-direction: column; 
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* border: 1px solid rgb(230, 50, 5); */
+        }
+        .div-index a{
+            display: inline-block;
+            flex: 0 0 auto;
+            /* left: 0px; */
+            margin: 0px 0px;
+            padding: 0px 0px;
+            max-width: 100%;
+            /* min-width: 20px; */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            /* border: 1px solid rgb(100, 104, 218); */
+        }
+        .div-content{
+            margin: 0px 5px;
+            padding: 10px 10px;
+            width: auto;
+            max-width: 1200px;
+            min-width: 400px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            word-wrap: break-word;
+            
+            /* border: 1px solid rgb(74, 153, 77); */
+            /* border-left: 1px solid rgb(238, 232, 232);  */
+            border-right: 1px solid rgb(238, 232, 232);
+        }
+        .div-content a{
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+        }
+
+        .author {
+            margin-right: 10px; /* 新增代码：为作者名称添加右边距 */
+        }
+        .title {
+            font-size: 18px; /* 新增代码：为标题添加字号 */
+            font-weight: bold; /* 新增代码：为标题添加加粗效果 */
+            margin-top: 5px; /* 新增代码：为标题添加上边距 */
+        }
+        .journal {
+            margin-top: 5px; /* 新增代码：为期刊信息添加上边距 */
+        }
+        .journal-name {
+            margin-right: 5px; /* 新增代码：为期刊名称添加右边距 */
+            font-style: italic;
+        }
+        .cite, .doi:link {
+            margin-right: 5px; /* 新增代码：为引用和DOI添加右边距 */
+            color: rgb(48, 48, 48); /* 新增代码：为引用和DOI添加灰色字体颜色 */
+            text-decoration: none;
+        }
+        .div-image {
+            margin: 0px 5px;
+            padding: 5px 5px;
+            /* width: 100%; */
+            aspect-ratio: 1/1; /* 设置宽高比为1/1 */
+            max-width: 100px;
+            min-width: 30px;
+            height: auto;
+            text-align: center;
+            /*  方便在头部空着这部分不显示，将网页用于其他用途  */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(134, 3, 20);
+        }
+        .image {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10%;
+            /* 设置宽高比为1/1 */
+            aspect-ratio: 1/1; 
+            object-fit: fill;
+            border: 1px solid rgb(211, 211, 211);
+        }
+    </style>
+    <script src="css/paper.js">
+    </script>
+</head>
+
+<body>
+   
+    <main>
+        <h1>Welcome to My Webpage</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien id faucibus porttitor, massa
+            tellus porttitor ligula, non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar efficitur.</p>
+        <h2>About Us</h2>
+        <div class="main-title">
+            <h1>Projects</h1>
+            <button onclick="disappear_images(this)" title="Hide or show the pictures in each row">
+                <span class="button-icon" aria-hidden="true">&#x2600;</span>
+                <!-- <span class="button-text">Hidden Picture</span> -->
+            </button>
+        </div>
+        <div id="div-container" class="div-paper-container-main">
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >1</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="css/images/personnal logo.jpg" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title">paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name" >TII journal of internetional papers</a>
+                        <a class="cite">vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href='#' >doi:20.234.4353</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >12354</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="slideshow/img1.jpg" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title">paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name" >TII journal of internetional papers</a>
+                        <a class="cite">vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href='#' >doi:20.234.4353</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >135489</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="slideshow/img2.jpg" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title">paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name" >TII journal of internetional papers</a>
+                        <a class="cite">vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href='#' >doi:20.234.4353</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >11235467889565</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title">paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name" >TII journal of internetional papers</a>
+                        <a class="cite">vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href='#' >doi:20.234.4353</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        auto_resize_iframe_send();
+    </script>
+
+    
+</body>
+
+</html>

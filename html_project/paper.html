@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paper</title>
+    
+    <style>
+        body{
+            max-height: 100%;
+            max-width: 100%;
+            /* padding: 10px 10px; */
+            /* margin: 0 0px; */
+            /* overflow: hidden; */
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            overflow-x: hidden;
+            /* border: 1px solid rgb(162, 161, 168); */
+        }
+        main{
+            /* z-index: 1; */
+            height: 100%;
+            width: auto;
+            padding: 10px 20px;
+            margin: 0px 0px;
+            max-width: 1280px;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            /* border: 1px solid rgb(162, 161, 168); */
+        }
+        main div.main-title{
+            display: flex;
+            flex-direction: row;
+            align-items: center; /* 新增代码：使标题居中对齐 */
+            margin: 10px 0; /* 新增代码：添加上下外边距 */
+        }
+        h1, h2 {
+            margin: 0 5px; /* 修改代码：为标题添加一些空白 */
+            font-size: 20px;
+        }
+
+        
+        button {
+            margin-left: auto; /* 新增代码：使按钮靠右对齐 */
+            /* height: 100%; */
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 30%;
+            background-color: #b9bdc9;
+            border: none;
+            outline: none;
+            color: yellow;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease-out;
+        }
+
+        button:hover {
+            background-color: #0062cc;
+            background-color: rgba(currentColor, 0.8, 0.2, 0.8);
+        }
+
+
+
+        main #div-paper-container{
+            display: flex;
+            position: relative;   /* 创建具有定位的祖先元素 */
+            align-items: center;  
+            flex-direction: column-reverse;
+            height: auto;
+            width: 100%;
+            max-width: 100%;
+            /* border: 1px solid rgb(104, 97, 161); */
+        }
+        #div-paper-container .div-one-paper{
+            display: flex;
+            position: relative;
+            align-items: center;     
+            flex-direction: row;
+            width: auto;
+            max-width: 100%;
+            /* max-width: 100%; */
+            height: auto;
+            margin: 0px 0px;
+            padding: 5px 5px;
+            /* border: 1px solid rgb(38, 16, 238); */
+        }
+       
+        /* 在元素内部设置分割线 */
+        #div-paper-container .div-one-paper  ::before{
+            content: "";
+            position: absolute;
+            /* z-index: 0; */
+            top: 0;
+            left: 0px; 
+            right: 0px;
+            height: 1px;
+            width: auto;
+            border-top: 1px solid rgb(226, 226, 226); 
+        }
+        /* 第一个元素加一个分割线 */
+        #div-paper-container .div-one-paper:first-child::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0px; 
+            right: 0px;
+            height: 1px;
+            width: auto;
+            border-top: 1px solid rgb(226, 226, 226); 
+        }
+
+        #div-paper-container .div-one-paper .div-index{
+            width: 50px;
+            height: auto;
+            padding: 5px 5px;
+            margin: 0px 0px;
+            min-width: 30px;
+            max-width: 100px;
+            display: flex;
+            justify-content:center;
+            align-items: center;  
+            flex-direction: column; 
+            /*  position的设置会造成 自身继承父类的 before部分属性  */
+            /* position: relative; */
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+           
+            /* border: 1px solid rgb(230, 50, 5); */
+        }
+        #div-paper-container .div-one-paper .div-index a{
+            display: inline-block;
+            flex: 0 0 auto;
+            margin: 0px 0px;
+            padding: 0px 0px;
+            width: auto;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* border: 1px solid rgb(74, 77, 153); */
+        }
+        #div-paper-container .div-one-paper .div-image {
+            /*  方便在头部空着这部分不显示，将网页用于其他用途  */
+            width: auto;
+            padding: 5px 5px;
+            margin: 0px 0px;
+            min-width: 20px;
+            max-width: 120px;
+            min-height: 20px;
+            max-height: 120px;
+            /* display: flex; */
+            /* justify-content:center; */
+            /* align-items: center;   */
+            /* flex-direction: column;  */
+            /* position: relative; */
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            color: rgb(128, 128, 128);
+            
+            /* border: 1px solid rgb(134, 3, 20); */
+        }
+        #div-paper-container .div-one-paper .div-image img{
+            /* 设置宽高比为1/1 */
+            aspect-ratio: 1/1; 
+            border-radius: 20%; 
+            object-fit: fill;
+
+            display: inline-block;
+            flex: 0 1 auto;
+            margin: 0px 0px;
+            padding: 0px 0px;
+            max-width: 100%;
+            max-height: 100%;
+            
+            border: 1px solid rgb(202, 202, 202);
+        }
+        #div-paper-container .div-one-paper .div-content{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: flex-start; */
+            align-items: flex-start;
+            /* position: relative; */
+            /* width: auto; */
+            height: 100%;
+            min-width: 600px;
+            max-width: 1080px;
+
+            margin: 0px 10px;
+            padding: 5px 10px;
+            width: auto;
+            
+            word-wrap: break-word;
+            /* border: 1px solid rgb(202, 166, 8); */
+        }
+        #div-paper-container .div-one-paper .div-content a{
+            font-size: 16px;
+            text-decoration: none;
+            padding: 1px 0px;
+        }
+        #div-paper-container a.author{
+            padding: 0px 0px;
+        }
+        
+        #div-paper-container a.title{
+            font-weight: bold;
+            font-style: normal;
+            font-size: 18px;
+        }
+        #div-paper-container .div-one-paper .div-content .journal a{
+            /* margin-right: 2px; */
+            padding: 5px 0px;
+        }
+        #div-paper-container a.journal-name{
+            /* font-weight: bold; */
+            font-style: italic;
+            color: rgb(33, 33, 34);  /* rgba(currentColor, 0.8, 0.2, 0.8); rgb(21, 22, 22)  */
+        }
+         /* 非访问状态下的链接颜色为蓝色 */
+        #div-paper-container a.cite,  #div-paper-container a.doi {
+            color: rgb(78, 78, 78);
+        }
+
+        #div-paper-container a.doi:hover {
+            color: rgb(233, 5, 5); /* 鼠标悬停时链接的颜色为红色 */
+            /* color: yellow; */
+        }
+
+    </style>
+    <script src="css/paper.js">
+    </script>
+</head>
+
+<body>
+   
+    <main>
+        <h1>Welcome to My Webpage</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien id faucibus porttitor, massa
+            tellus porttitor ligula, non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar efficitur.</p>
+        <h2>About Us</h2>
+        <p>Nullam vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel aliquet elit. Sed ac neque et
+            eros vestibulum laoreet. Nullam quis tortor auctor, venenatis enim vitae, tincidunt odio. Donec scelerisque,
+            odio non iaculis maximus, mi sem ullamcorper odio, vel euismod ipsum urna vel sapien. </p>
+        <div class="main-title">
+            <h1>Projects</h1>
+            <button onclick="disappear_images(this)" title="Hide or show the pictures in each row">
+                <span class="button-icon" aria-hidden="true">&#x2600;</span>
+                <!-- <span class="button-text">Hidden Picture</span> -->
+            </button>
+        </div>
+        <div id="div-paper-container" class="div-paper-container-main">
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >133</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="css/images/personnal logo.jpg" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title"> paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name"  >TII journal of internetional papers</a>
+                        <a class="cite" >vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href="#">doi:20.234.4353</a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >13345</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title"> paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name"  >TII journal of internetional papers</a>
+                        <a class="cite" >vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href="#">doi:20.234.4353</a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="div-one-paper">
+                <div class="div-index" style="height: 100%; ">
+                    <a class="index" >133567</a>
+                </div>
+                <div class="div-image" >
+                    <img class="image" src="slideshow/img1.jpg" alt="Image not found"></img>
+                </div>
+                <div class="div-content">
+                    <a class="author">authors in paper vel sapien et dolor condimentum elementum vel vitae enim. Mauris vel</a>
+                    <a class="title"> paper name non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar</a>
+                    <div class="journal">
+                        <a class="journal-name"  >TII journal of internetional papers</a>
+                        <a class="cite" >vol. 3 nn.32 pp:23443-2434</a>
+                        <a class="doi" href="#">doi:20.234.4353</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        auto_resize_iframe_send();
+        // get_win_size();
+    </script>
+
+</body>
+
+</html>

@@ -123,7 +123,7 @@ install_Apache(){
         colorecho $BLUE "Apache is not installed. Installing Apache..."
         # 2. 安装 Apache 服务器
         
-        sudo apt install apache2
+        sudo apt install -y apache2
         # 检查安装结果
         if [ $? -eq 0 ]; then
             colorecho $GREEN "Apache2 installation successful."
@@ -158,7 +158,7 @@ install_Nginx(){
         colorecho $GREEN "Nginx had been installed."
     else
         colorecho $BLUE "Nginx is not installed. Installing Nginx ..."
-        sudo apt install nginx
+        sudo apt install -y nginx
         
         # 检查安装结果
         if [ $? -eq 0 ]; then
@@ -211,7 +211,7 @@ install_Git(){
 
 download_html_files(){
     # 创建存放网页文件的目录
-    sudo mkdir $Download_Path
+    # sudo mkdir $Download_Path
 
     # 克隆 GitHub 仓库到指定目录
     sudo git clone https://github.com/biao169/html_auto_deploy.git "$Download_Path"

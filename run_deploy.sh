@@ -10,7 +10,7 @@ PLAIN='\033[0m'
 
 Download_Path="/usr/"
 Deploy_Path="/var/www/html/"
-EXIST_Servie = "null"
+EXIST_Servie="null"
 Client="1"
 checkSystem() {
     result=$(id | awk '{print $1}')
@@ -60,6 +60,7 @@ colorecho() {
 
 
 start_choice(){
+    slogon
     if [ -x "$(command -v apache2)" ]; then
         EXIST_Servie="apache2"
     else
@@ -83,21 +84,25 @@ start_choice(){
     else
         echo "   2: nginx"
     fi
-     echo "   3: restart service: ${EXIST_Servie}"
+    echo "   3: restart service: ${EXIST_Servie}"
+    echo -e "   4: Modifying the configuration file: ${YELLOW}nginx.conf${PLAIN} [修改配置]"
+    echo "   5: Restore configuration of nginx.conf [恢复配置]"
+    echo "   6: show a correct configuration of nginx.conf [限制可用配置]"
+    
 
-    read -p "Enter your selection [ 1 | 2 | 3 ]:" Client
-    if [[ "$Client" == "1" || "$Client" == "2" || "$Client" == "3" ]]; then
-        colorecho $YELLOW "Your choice is: $Client"
-    else
-        colorecho $RED "input ERROR!"
-        read -p "Enter your selection again [ 1 | 2 | 3 ]:" Client
-        colorecho $YELLOW "Your choice is: $Client"
-        if [[ "$Client" == "1" || "$Client" == "2" || "$Client" == "3" ]]; then
-           colorecho $YELLOW "Your choice is: $Client"
-        else
-           colorecho $RED "input ERROR!"
-        fi
-    fi
+    read -p "Enter your selection: " Client
+    # if [[ "$Client" == "1" || "$Client" == "2" || "$Client" == "3" || "$Client" == "3" ]]; then
+    colorecho $YELLOW "Your choice is: $Client"
+    # else
+    #     colorecho $RED "input ERROR!"
+    #     read -p "Enter your selection again:" Client
+    #     colorecho $YELLOW "Your choice is: $Client"
+    #     if [[ "$Client" == "1" || "$Client" == "2" || "$Client" == "3" ]]; then
+    #        colorecho $YELLOW "Your choice is: $Client"
+    #     else
+    #        colorecho $RED "input ERROR!"
+    #     fi
+    # fi
 }
 
 
@@ -234,10 +239,10 @@ move_html_files(){
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
     sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
 
-    if [ "$Client" == "1" ]; then
+    if [ "$Clent" == "1" ]; then
         # 3. 启动 Apache 服务器
         restart_Apache
-    elif [ "$Client" == "2" ]; then
+    elif [ "$Clent" == "2" ]; then
         restart_Nginx
     fi
     # 检查是否成功
@@ -255,8 +260,136 @@ move_html_files(){
 
 }
 
+show_successful_config(){
+    Conf="user www-data;
+        worker_processes auto;
+        error_log /var/log/nginx/error.log;
+        pid /run/nginx.pid;
 
+        # Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+        include /usr/share/nginx/modules/*.conf;
 
+        events {
+            worker_connections 1024;
+        }
+
+        http {
+            log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for"';
+
+            access_log  /var/log/nginx/access.log  main;
+            server_tokens off;
+
+            sendfile            on;
+            tcp_nopush          on;
+            tcp_nodelay         on;
+            keepalive_timeout   65;
+            types_hash_max_size 2048;
+            gzip                on;
+
+            include             /etc/nginx/mime.types;
+            default_type        application/octet-stream;
+
+            # Load modular configuration files from the /etc/nginx/conf.d directory.
+            # See http://nginx.org/en/docs/ngx_core_module.html#include
+            # for more information.
+            include /etc/nginx/conf.d/*.conf;
+            server {
+                listen 80 default_server;
+                listen [::]:80 default_server;
+                root /var/www/html;
+
+                index index.html index.htm index.nginx-debian.html;
+
+                server_name _;
+
+                location / {
+                        # First attempt to serve request as file, then
+                        # as directory, then fall back to displaying a 404.
+                        try_files $uri $uri/ =404;
+                }
+            }
+
+        }
+        "
+    echo "${Conf}"
+}
+
+# 修改ngix的配置文件 一般路径在 /etc/nginx/nginx.conf
+# 配置文件路径
+Config_File="/etc/nginx/nginx.conf" 
+set_conf_file(){
+    
+      # 插入位置标记
+    Insert_Marker="http {"
+    new_row=$"\n\t"
+    New_Conf="         # 新添加的内容从这开始 ${new_row}\
+    server {${new_row}\
+        listen 80;${new_row}\
+        listen [::]:80;${new_row}\
+${new_row}\
+        server_name Kingbiu;${new_row}\
+${new_row}\
+        root ${Download_Path}/html_auto_deploy/html_project/;${new_row}\
+        index index.html;${new_row}\
+${new_row}\
+        location / {${new_row}\
+                try_files \$uri \$uri/ =404;${new_row}\
+        }${new_row}\
+    }${new_row}    # 新添加的内容到此结束 ${new_row}\
+    "
+        # 检查配置文件是否存在
+    if [ -f "$Config_File" ]; then
+        if grep -q "Kingbiu" ${Config_File}; then
+            echo "配置已添加过，不能重复添加。"
+        else
+            # echo "目标字符不存在"
+
+            sudo chmod 777 ${Config_File}
+            # 检查安装结果
+            if [ $? -eq 0 ]; then
+                # colorecho $RED "可手动修改权限后重试，可使用命令: \"sudo chmod 777 ${Config_File}\"."
+                echo "配置文件：[ ${Config_File} ] 修改权限：可写入"
+            else
+                colorecho $RED "可手动修改权限后重试，可使用命令: \"sudo chmod 777 ${Config_File}\"."
+                exit 1
+            fi
+
+            # 在配置文件末尾追加新配置
+            # echo "$New_Conf" | sudo tee -a "$Config_File" >/dev/null
+            # echo "已成功添加新配置到 $Config_File"
+            # 在配置文件中查找插入位置标记，并在其后插入新配置
+            sudo sed -i.backup "/${Insert_Marker}/a${New_Conf}" ${Config_File}
+            if [ $? -eq 0 ]; then
+                echo "已成功插入新配置到 ${Config_File}"
+            else
+                echo "插入失败: $Config_File"
+                exit 1
+            fi
+            echo "原配置备份在: ${Config_File}.backup"
+        fi 
+    else
+        echo "配置文件 ${Config_File} 不存在"
+    fi
+}
+
+reset_conf_file(){
+    sudo rm -f ${Config_File}
+    if [ $? -eq 0 ]; then
+        echo "删除配置 ${Config_File}"
+    else
+        echo "删除失败: $Config_File，请手动删除，可执行指令：[ sudo rm -f ${Config_File} ] "
+        exit 1
+    fi
+    sudo mv "${Config_File}.backup" ${Config_File}
+    if [ $? -eq 0 ]; then
+        echo "恢复配置: ${Config_File}.backup --> ${Config_File}"
+    else
+        echo "恢复失败: $Config_File，请恢复，可执行指令：[ sudo mv ${Config_File}.backup ${Config_File} ] "
+        exit 1
+    fi
+}
 
 # 执行部署步骤...
 slogon
@@ -280,6 +413,20 @@ elif [ "$Client" == "3" ]; then
     elif [ "$EXIST_Servie" == "nginx" ]; then
         restart_Nginx
     fi
+elif [ "$Client" == "4" ]; then
+    if [ "$EXIST_Servie" == "apache2" ]; then
+        echo " ${EXIST_Servie}.conf: finish by yourself! "
+    elif [ "$EXIST_Servie" == "nginx" ]; then
+        set_conf_file
+    fi 
+elif [ "$Client" == "5" ]; then
+    if [ "$EXIST_Servie" == "apache2" ]; then
+        echo " ${EXIST_Servie}.conf: finish by yourself! "
+    elif [ "$EXIST_Servie" == "nginx" ]; then
+        reset_conf_file
+    fi     
+elif [ "$Client" == "6" ]; then
+    show_successful_config
 else
     colorecho $RED "没有在个选项，${Client}"
     exit 1

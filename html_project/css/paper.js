@@ -3,17 +3,60 @@ function disappear_images(ele){
     let imgs = document.querySelectorAll(".div-image");
     let button = ele ;
     if (imgs[0].style.display=="none"){
-        imgs.forEach((img)=>{ img.style.display='block';});
+        imgs.forEach((img)=>{ img.style.display='flex';});
         // button.textContent = "Hidden Picture";
         button.querySelector('span').style.color = 'yellow';
     }
     else{
         imgs.forEach((img)=>{ img.style.display='none';});
         // button.textContent = "Show Picture";
-        button.querySelector('span').style.color = 'green';
+        button.querySelector('span').style.color = 'mediumseagreen';
     }
     // console.log('====', imgs[0].style.display, ele.textContent);
 }
+
+/*  将每一行统一高度  */
+function auto_format_row_height(){
+    const containers = document.querySelectorAll(".div-paper-container");
+    // var max_img_height = 0;
+    // var max_img_width = 0;
+    
+    function justment(papers){
+        papers.forEach((paper, index)=>{
+            let div_img = paper.querySelector('.div-image');
+            let img = div_img.querySelector('.image');
+            // 获取计算后的样式
+            const computedStyle = window.getComputedStyle(div_img);
+            let minWidth = computedStyle.minWidth;
+            const maxWidth = computedStyle.maxWidth;
+            if (minWidth <40 || minWidth=="auto") {  minWidth = 40;  }
+
+            let max_img_height = paper.offsetHeight;
+            let max_img_width = paper.offsetWidth;
+            console.log(index, 'paper heighth:', max_img_height, 'widt:', max_img_width,);
+            max_img_width = Math.ceil(max_img_width*0.1);
+            if (max_img_width>maxWidth){ max_img_width=maxWidth; }
+            if (max_img_width<minWidth){ max_img_width=minWidth; }
+            max_img_height = max_img_width;
+
+            div_img.style.height  = max_img_height+'px';
+            div_img.style.width = max_img_width+'px';
+            // img.style.height  = (max_img_height-20)+'px';
+            // img.style.width = (max_img_width-20)+'px';
+            // img.offsetWidth = img.offsetHeight;
+            // console.log(index, "new H W:", div_img.offsetHeight, div_img.offsetWidth, ':', max_img_height, max_img_width)
+            // console.log('width:', div_img.clientWidth, 'height:', img.clientHeight, img.offsetHeight)
+        });
+        
+        
+
+    }
+    containers.forEach((container, index)=>{ 
+        let papers = container.querySelectorAll('.div-one-paper');
+        justment(papers); 
+    });
+}
+
 
 
 
@@ -47,6 +90,9 @@ function auto_resize_iframe_send(){
     co_domain_message_send();
     window.removeEventListener('resize', co_domain_message_send, );
     window.addEventListener('resize', co_domain_message_send, );
+
+    window.removeEventListener('resize', auto_format_row_height, );
+    window.addEventListener('resize', auto_format_row_height, );
     // console.log("set auto send iframe data!");
 }
 

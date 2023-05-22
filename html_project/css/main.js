@@ -31,24 +31,25 @@ function dropdown_delay_disappear(event) {
         dropdowns.forEach((dropdown)=>{dropdown.style.display = params;});
     }
 
-    const fn1 = function (){
+    function fn1 (){
         clearTimeout(timer);
-        try{
+        // try{
         set_all("block");
-        }catch(ex){}
+        // }catch(ex){}
     }
-    parentElement.removeEventListener('mouseenter',fn1);  // 避免重复监听事件，消耗资源
-    parentElement.addEventListener('mouseenter',fn1, { once: true });
-    const fn2 = function (){
+    fn1(); // 鼠标首次划入，不会监听，须先显示
+    parentElement.removeEventListener('mouseenter',fn1);  // 避免重复监听事件，消耗资源, { once: true }
+    parentElement.addEventListener('mouseenter',fn1);
+    function fn2(){
         timer = setTimeout(() => {
             try{
             set_all("none");
             }catch(ex){}
-            clearTimeout(timer);  // 定时器执行完后，自行销毁
-        }, 130);
+            // clearTimeout(timer);  // 定时器执行完后，自行销毁
+        }, 100);
     }
-    parentElement.removeEventListener('mouseleave',fn2)
-    parentElement.addEventListener('mouseleave', fn2, { once: true });
+    parentElement.removeEventListener('mouseleave',fn2)   /*  , { once: true }   */
+    parentElement.addEventListener('mouseleave', fn2);
 
 }
 
@@ -56,14 +57,14 @@ function dropdown_delay_disappear(event) {
 // console.log('console');
 /* ------------------  轮播函数  ------------------------------  */
 function slideshow_imgs(timeout =1000) {
-    var current_index=0;
+    let current_index=0;
     // 只针对当前的容器，不会读取到其他容器
     const parentElement = document.currentScript.parentElement;
     const bt_prev = parentElement.querySelector(".prev");
     const bt_next = parentElement.querySelector(".next");
     // var slideshows_div = parentElement.querySelector(".slideshow");
     const slideshows = parentElement.querySelector(".slideshow").querySelectorAll(".slideshow-image");
-    var timer;
+    let timer;
 
     //  添加：轮播下方的索引图标
     const sliderDotsContainer = parentElement.querySelector('.slider-dots'); // 获取索引小图标的容器元素
@@ -95,7 +96,7 @@ function slideshow_imgs(timeout =1000) {
         setActiveDot(idx);
         //  连续循环拼接效果
         function img_priority(idx) {
-            for (var i=0; i<slideshows.length; i++){
+            for (let i=0; i<slideshows.length; i++){
                 slideshows[i].style.zIndex = "0"; 
             }
             if (idx>last_idx){  // 向右
@@ -115,8 +116,8 @@ function slideshow_imgs(timeout =1000) {
         }
         img_priority(idx);  //  连续循环拼接效果
         // console.log(idx, ':', slideshows[0].style.zIndex, slideshows[1].style.zIndex, slideshows[2].style.zIndex)
-        for (var i=0; i<slideshows.length; i++){
-            var position = i;
+        for (let i=0; i<slideshows.length; i++){
+            let position = i;
 
             if (idx==(slideshows.length-1) && i==0){   position=slideshows.length;  }  //  显示最后一张时，第一页切换上来
             if (idx==0 && i==(slideshows.length-1)){  position=-1;  }  //  显示第一张时，最后一页切换在左边
@@ -129,7 +130,7 @@ function slideshow_imgs(timeout =1000) {
     function showImage2(idx, last_idx) {
         setActiveDot(idx);
         // var slideshows = parentElement.querySelector(".slideshow").querySelectorAll(".slideshow-image")
-        for (var i=0; i<slideshows.length; i++){
+        for (let i=0; i<slideshows.length; i++){
             slideshows[i].style.display='none'; 
         }
         slideshows[idx].style.display='block';
@@ -170,39 +171,39 @@ function slideshow_imgs(timeout =1000) {
 
     // 绑定按钮点击事件
     bt_prev.removeEventListener('click', prevImage);
-    bt_prev.addEventListener('click', prevImage, { once: true });
+    bt_prev.addEventListener('click', prevImage);
     bt_next.removeEventListener('click', nextImage);
-    bt_next.addEventListener('click', nextImage, { once: true });
+    bt_next.addEventListener('click', nextImage);
 
-    bt_prev.removeEventListener('mouseenter', stopSlideshow);
-    bt_prev.addEventListener('mouseenter', stopSlideshow, { once: true });
-    bt_next.removeEventListener('mouseenter', stopSlideshow);
-    bt_next.addEventListener('mouseenter', stopSlideshow, { once: true });
+    // bt_prev.removeEventListener('mouseenter', stopSlideshow);
+    // bt_prev.addEventListener('mouseenter', stopSlideshow,);
+    // bt_next.removeEventListener('mouseenter', stopSlideshow);
+    // bt_next.addEventListener('mouseenter', stopSlideshow,);
 
     // 鼠标悬停时停止自动播放，移出时恢复自动播放
-    var slidewin = parentElement.querySelector(".slideshow");
+    // var slidewin = parentElement.querySelector(".slideshow");
     //  onmouseover：当鼠标指针移动到元素上方时触发该事件。移动到子元素时也触发  //  mouseenter:鼠标在子节点上不会触发
-    slidewin.removeEventListener('mouseenter', stopSlideshow); 
-    slidewin.addEventListener('mouseenter', stopSlideshow, { once: true });  
-    slidewin.removeEventListener('mouseleave', startSlideshow);
-    slidewin.addEventListener('mouseleave', startSlideshow, { once: true });
+    parentElement.removeEventListener('mouseenter', stopSlideshow); 
+    parentElement.addEventListener('mouseenter', stopSlideshow, );  
+    parentElement.removeEventListener('mouseleave', startSlideshow);
+    parentElement.addEventListener('mouseleave', startSlideshow, );
 
     
     // 为每个索引小图标添加点击事件监听器
     dots.forEach((dot, index) => {
         const fn3 = () => {
-            showImage(index, current_index); // 切换到对应索引的轮播项
+            let last_idx = 0;
+            if (current_index==slideshows.length-1 && index==0){ last_idx=index-1;}
+            else if(current_index==0 && index==slideshows.length-1){ last_idx=index+1; }
+            else { last_idx=current_index; }
+            showImage(index, last_idx); // 切换到对应索引的轮播项
         }
         dot.removeEventListener('click', fn3);
-        dot.addEventListener('click', fn3, { once: true });
-        dot.removeEventListener('mouseenter', fn3);
-        dot.addEventListener('mouseenter', fn3, { once: true });
-        dot.removeEventListener('mouseleave', fn3);
-        dot.addEventListener('mouseleave', fn3, { once: true });
+        dot.addEventListener('click', fn3, );
     });
 
 
-    showImage(0);
+    showImage(0, 0);
     //设置定时器，每隔两秒切换一张图片
     startSlideshow();
     // console.log(index);

@@ -234,6 +234,7 @@ move_html_files(){
 
     echo "move：[$pwd/html_auto_deploy] to [$Download_Path]"
     # 1. 复制 HTML 文件和相关资源到部署目录
+    sudo rm -f "$Download_Path/html_auto_deploy"
     sudo mv "html_auto_deploy/" "$Download_Path"
 
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"

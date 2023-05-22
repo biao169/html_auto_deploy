@@ -235,10 +235,10 @@ move_html_files(){
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
     sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
 
-    if [ "$clent" == "1" ]; then
+    if [ "$Client" == "1" ]; then
         # 3. 启动 Apache 服务器
         restart_Apache
-    elif [ "$clent" == "2" ]; then
+    elif [ "$Client" == "2" ]; then
         restart_Nginx
     fi
     # 检查是否成功

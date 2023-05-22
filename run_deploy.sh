@@ -8,7 +8,7 @@ YELLOW="\033[33m"   # Warning message
 BLUE="\033[36m"     # Info message
 PLAIN='\033[0m'
 
-Download_Path="/usr/html_project/"
+Download_Path="/usr/"
 Deploy_Path="/var/www/html/"
 
 Client="1"

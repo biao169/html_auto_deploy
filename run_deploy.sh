@@ -239,7 +239,7 @@ move_html_files(){
     sudo mv "html_auto_deploy/" "$Download_Path"
 
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
-    sudo rm -rf "$Deploy_Path/."
+    sudo rm -rf "$Deploy_Path."
     sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
 
     if [ "$Clent" == "1" ]; then

@@ -10,7 +10,7 @@ PLAIN='\033[0m'
 
 Download_Path="/usr/"
 Deploy_Path="/var/www/html/"
-
+EXIST_Servie = "null"
 Client="1"
 checkSystem() {
     result=$(id | awk '{print $1}')
@@ -48,7 +48,7 @@ slogon() {
     echo -e "#                       ${GREEN}作者:${PLAIN} Kingbiu                       #"
     echo "-------------------------------------------------------------"
     echo -e "   ${YELLOW}This script requires the installation of:${PLAIN}"
-    echo -e "        ${YELLOW}a) apache2 || nginx;  b) git;  c) expect (Maybe not)${PLAIN}"
+    echo -e "    ${YELLOW}a) apache2 || nginx;  b) git;  c) expect (Maybe not)${PLAIN}"
     echo ""
     echo "#############################################################"
     echo ""
@@ -60,25 +60,26 @@ colorecho() {
 
 
 start_choice(){
-
-    EXIST_Servie = "null"
-    if [ $(which apache2)]; then
-        EXIST_Servie = "apache2"
-    fi
-
-    if [ $(which nginx)]; then
-        EXIST_Servie = "nginx"
-    fi
-
-
     slogon
+    if [ -x "$(command -v apache2)" ]; then
+        EXIST_Servie="apache2"
+    else
+        echo "     No apache2."
+    fi
+
+    if [ -x "$(command -v nginx)" ]; then
+        EXIST_Servie="nginx"
+    else 
+        echo "     No nginx."
+    fi
+
     echo "Please select function:"
-    if [ EXIST_Servie == "apache2" ]; then
+    if [ "$EXIST_Servie" == "apache2" ]; then
        echo  -e "   1: apache2   ${GREEN}(Is installed)${PLAIN}"
     else
         echo "   1: apache2"
     fi
-    if [ EXIST_Servie == "nginx" ]; then
+    if [ "$EXIST_Servie" == "nginx" ]; then
         echo  -e "   2: nginx   ${GREEN}(Is installed)${PLAIN}"
     else
         echo "   2: nginx"
@@ -117,7 +118,7 @@ update_apt(){
 
 install_Apache(){
     # 检测 Apache 服务器是否已安装
-    if [ $(which apache2)]; then
+    if [ -x "$(command -v apache2)" ]; then
         colorecho $GREEN "Apache  had been installed."
     else
         colorecho $BLUE "Apache is not installed. Installing Apache..."
@@ -154,7 +155,7 @@ restart_Apache(){
 
 install_Nginx(){
     # 检测 Nginx 服务器是否已安装
-    if [ $(which nginx) ]; then
+    if [ -x "$(command -v nginx)" ]; then
         colorecho $GREEN "Nginx had been installed."
     else
         colorecho $BLUE "Nginx is not installed. Installing Nginx ..."
@@ -210,15 +211,13 @@ install_Git(){
 }
 
 download_html_files(){
-    # 创建存放网页文件的目录
-    # sudo mkdir $Download_Path
-
+    echo "download at：${pwd}"
     # 克隆 GitHub 仓库到指定目录
-    sudo git clone https://github.com/biao169/html_auto_deploy.git "$Download_Path"
+    git clone https://github.com/biao169/html_auto_deploy.git
 
     # 检查克隆是否成功
     if [ $? -eq 0 ]; then
-        colorecho $GREEN "html files download successful."
+        colorecho $GREEN "html files download successful. in: ${pwd}"
     else
         colorecho $RED "网页文件下载失败，请检查仓库 URL 是否正确。"
         exit 1
@@ -226,10 +225,15 @@ download_html_files(){
 }
 
 move_html_files(){
+     # 创建存放网页文件的目录
+    # sudo mkdir "$Download_Path"
+
+    echo "move：[$pwd/html_auto_deploy] to [$Download_Path]"
     # 1. 复制 HTML 文件和相关资源到部署目录
     sudo mv "html_auto_deploy/" "$Download_Path"
 
-    sudo cp -r "$Download_Path/html_project/*" $Deploy_Path
+    echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
+    sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
 
     if [ "$clent" == "1" ]; then
         # 3. 启动 Apache 服务器

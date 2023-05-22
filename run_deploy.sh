@@ -266,8 +266,14 @@ start_choice
 if [ "$Client" == "1" ]; then
     # 3. 启动 Apache 服务器
     install_Apache
+    install_Git
+    download_html_files
+    move_html_files
 elif [ "$Client" == "2" ]; then
     install_Nginx
+    install_Git
+    download_html_files
+    move_html_files
 elif [ "$Client" == "3" ]; then
     if [ "$EXIST_Servie" == "apache2" ]; then
          # 3. 启动 Apache 服务器
@@ -279,9 +285,7 @@ else
     colorecho $RED "没有在个选项，${Client}"
     exit 1
 fi
-install_Git
-download_html_files
-move_html_files
+
 
 
 # 3. 启动 Apache 服务器

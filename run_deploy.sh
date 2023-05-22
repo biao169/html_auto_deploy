@@ -60,7 +60,6 @@ colorecho() {
 
 
 start_choice(){
-    slogon
     if [ -x "$(command -v apache2)" ]; then
         EXIST_Servie="apache2"
     else

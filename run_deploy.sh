@@ -225,6 +225,7 @@ install_Git(){
 download_html_files(){
     echo "download at：${pwd}"
     # 克隆 GitHub 仓库到指定目录
+    sudo rm -rf "html_auto_deploy"
     git clone https://github.com/biao169/html_auto_deploy.git
 
     # 检查克隆是否成功
@@ -242,7 +243,7 @@ move_html_files(){
 
     echo "move：[$pwd/html_auto_deploy] to [$Download_Path]"
     # 1. 复制 HTML 文件和相关资源到部署目录
-    sudo rm -f "$Download_Path/html_auto_deploy"
+    sudo rm -rf "$Download_Path/html_auto_deploy"
     sudo mv "html_auto_deploy/" "$Download_Path"
 
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"

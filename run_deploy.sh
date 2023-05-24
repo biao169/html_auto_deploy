@@ -44,7 +44,7 @@ checkSystem() {
 slogon() {
     clear
     echo "#############################################################"
-    echo -e "#               ${RED}Ubuntu HTML 带伪装一键安装脚本${PLAIN}              #"
+    echo -e "#                ${RED}Ubuntu HTML 一键安装部署脚本${PLAIN}                #"
     echo -e "#                       ${GREEN}作者:${PLAIN} Kingbiu                       #"
     echo "-------------------------------------------------------------"
     echo -e "   ${YELLOW}This script requires the installation of:${PLAIN}"
@@ -74,21 +74,29 @@ start_choice(){
     fi
 
     echo "Please select function:"
-    if [ "$EXIST_Servie" == "apache2" ]; then
-       echo  -e "   1: apache2   ${GREEN}(Is installed)${PLAIN}"
+    echo "--------" 
+    if [ "$EXIST_Servie" == "null" ]; then
+        echo "   1: restart service: [unknow]"
     else
-        echo "   1: apache2"
+        echo -e "   1: restart service: ${GREEN}${EXIST_Servie}${PLAIN}"
+    fi
+    echo "--------" 
+    echo -e "   2: Modifying the configuration file: ${YELLOW}nginx.conf${PLAIN} [修改配置]"
+    echo -e "   3: Restore configuration of: ${YELLOW}nginx.conf${PLAIN} [恢复配置]"
+    echo "   4: show a correct configuration of nginx.conf [显示可用配置]"
+    echo "--------  [ One-click install ]  ----------"
+    if [ "$EXIST_Servie" == "apache2" ]; then
+       echo  -e "   5: apache2   ${GREEN}(Is installed)${PLAIN}  [ One-click install ]"
+    else
+        echo "   5: apache2"
     fi
     if [ "$EXIST_Servie" == "nginx" ]; then
-        echo  -e "   2: nginx   ${GREEN}(Is installed)${PLAIN}"
+        echo  -e "   6: nginx   ${GREEN}(Is installed)${PLAIN}"
     else
-        echo "   2: nginx"
+        echo "   6: nginx"
     fi
-    echo "   3: restart service: ${EXIST_Servie}"
-    echo -e "   4: Modifying the configuration file: ${YELLOW}nginx.conf${PLAIN} [修改配置]"
-    echo "   5: Restore configuration of nginx.conf [恢复配置]"
-    echo "   6: show a correct configuration of nginx.conf [限制可用配置]"
     
+    echo ""
 
     read -p "Enter your selection: " Client
     # if [[ "$Client" == "1" || "$Client" == "2" || "$Client" == "3" || "$Client" == "3" ]]; then
@@ -217,7 +225,6 @@ install_Git(){
 download_html_files(){
     echo "download at：${pwd}"
     # 克隆 GitHub 仓库到指定目录
-    sudo rm -rf "html_auto_deploy"
     git clone https://github.com/biao169/html_auto_deploy.git
 
     # 检查克隆是否成功
@@ -233,21 +240,14 @@ move_html_files(){
      # 创建存放网页文件的目录
     # sudo mkdir "$Download_Path"
 
-    echo "move：[$pwd/html_auto_deploy] --> [$Download_Path]"
+    echo "move：[$pwd/html_auto_deploy] to [$Download_Path]"
     # 1. 复制 HTML 文件和相关资源到部署目录
-    sudo rm -rf "$Download_Path/html_auto_deploy"
+    sudo rm -f "$Download_Path/html_auto_deploy"
     sudo mv "html_auto_deploy/" "$Download_Path"
 
     echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
-    sudo rm -rf "$Deploy_Path."
     sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
 
-    if [ "$Clent" == "1" ]; then
-        # 3. 启动 Apache 服务器
-        restart_Apache
-    elif [ "$Clent" == "2" ]; then
-        restart_Nginx
-    fi
     # 检查是否成功
     if [ $? -eq 0 ]; then
         colorecho $GREEN "网页部署完成！."
@@ -263,7 +263,7 @@ move_html_files(){
 
 }
 
-show_successful_config(){
+show_successful_config_nginx(){
     Conf="user www-data;
         worker_processes auto;
         error_log /var/log/nginx/error.log;
@@ -322,7 +322,7 @@ show_successful_config(){
 # 修改ngix的配置文件 一般路径在 /etc/nginx/nginx.conf
 # 配置文件路径
 Config_File="/etc/nginx/nginx.conf" 
-set_conf_file(){
+set_conf_file_nginx(){
     
       # 插入位置标记
     Insert_Marker="http {"
@@ -377,7 +377,7 @@ ${new_row}\
     fi
 }
 
-reset_conf_file(){
+reset_conf_file_nginx(){
     sudo rm -f ${Config_File}
     if [ $? -eq 0 ]; then
         echo "删除配置 ${Config_File}"
@@ -398,38 +398,43 @@ reset_conf_file(){
 slogon
 start_choice
 # update_apt
+
 if [ "$Client" == "1" ]; then
-    # 3. 启动 Apache 服务器
-    install_Apache
-    install_Git
-    download_html_files
-    move_html_files
-elif [ "$Client" == "2" ]; then
-    install_Nginx
-    install_Git
-    download_html_files
-    move_html_files
-elif [ "$Client" == "3" ]; then
     if [ "$EXIST_Servie" == "apache2" ]; then
          # 3. 启动 Apache 服务器
         restart_Apache
     elif [ "$EXIST_Servie" == "nginx" ]; then
         restart_Nginx
     fi
-elif [ "$Client" == "4" ]; then
+elif [ "$Client" == "2" ]; then
     if [ "$EXIST_Servie" == "apache2" ]; then
         echo " ${EXIST_Servie}.conf: finish by yourself! "
     elif [ "$EXIST_Servie" == "nginx" ]; then
-        set_conf_file
+        set_conf_file_nginx
     fi 
-elif [ "$Client" == "5" ]; then
+elif [ "$Client" == "3" ]; then
     if [ "$EXIST_Servie" == "apache2" ]; then
         echo " ${EXIST_Servie}.conf: finish by yourself! "
     elif [ "$EXIST_Servie" == "nginx" ]; then
-        reset_conf_file
+        reset_conf_file_nginx
     fi     
+elif [ "$Client" == "4" ]; then
+    show_successful_config_nginx
+
+elif [ "$Client" == "5" ]; then
+    # 3. 启动 Apache 服务器
+    install_Apache
+    install_Git
+    download_html_files
+    move_html_files
+    restart_Apache
 elif [ "$Client" == "6" ]; then
-    show_successful_config
+    install_Nginx
+    install_Git
+    download_html_files
+    move_html_files
+    set_conf_file_nginx
+    restart_Nginx
 else
     colorecho $RED "没有在个选项，${Client}"
     exit 1

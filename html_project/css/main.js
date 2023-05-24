@@ -23,8 +23,9 @@ function dropdown_delay_disappear(event) {
     // })
 
     //  每个导航栏菜单单独运行，只针对自己的下拉菜单 
-    var parentElement =event.target.parentNode ; // = document.currentScript.parentElement;
-    var dropdowns = parentElement.querySelectorAll("ul");  // 不用querySelector()是考虑到会有多个之类
+    const parentElement = event.target.parentNode;     //target.parentNode ; // = document.currentScript.parentElement;
+    // console.log('==',parentElement)
+    const dropdowns = parentElement.querySelectorAll(".ul-dropdown");  // 不用querySelector()是考虑到会有多个之类
     var timer;
 
     function set_all(params) {
@@ -34,7 +35,7 @@ function dropdown_delay_disappear(event) {
     function fn1 (){
         clearTimeout(timer);
         // try{
-        set_all("block");
+        set_all("flex");
         // }catch(ex){}
     }
     fn1(); // 鼠标首次划入，不会监听，须先显示
@@ -53,8 +54,15 @@ function dropdown_delay_disappear(event) {
 
 }
 
-// confirm('This is a win!');
-// console.log('console');
+/* ------------------  小屏幕，让导航菜单可见  ----------------------- */
+function show_ul_menu(event){
+    const parentElement = event.target.parentNode.parentElement.parentElement ;
+    console.log('==', event.target.parentNode, parentElement);
+    const navs = parentElement.querySelectorAll(".ul-menu");
+    navs.forEach((nav)=>{ nav.style.display = "flex";});
+}
+
+
 /* ------------------  轮播函数  ------------------------------  */
 function slideshow_imgs(timeout =1000) {
     let current_index=0;

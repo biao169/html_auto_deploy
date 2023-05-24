@@ -91,8 +91,8 @@ function auto_resize_iframe_send(){
     window.removeEventListener('resize', co_domain_message_send, );
     window.addEventListener('resize', co_domain_message_send, );
 
-    window.removeEventListener('resize', auto_format_row_height, );
-    window.addEventListener('resize', auto_format_row_height, );
+    // window.removeEventListener('resize', auto_format_row_height, );
+    // window.addEventListener('resize', auto_format_row_height, );
     // console.log("set auto send iframe data!");
 }
 

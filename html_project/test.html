@@ -6,310 +6,65 @@
 
 </script>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="css/paper.js"></script>
     <!-- 自动刷新 -->
     <!-- <meta http-equiv="refresh" content="1">   -->
     <meta charset="utf-8">
     <title>Test</title>
     <style>
-        body{
-            margin: 5px 5px;
-            padding: 5px 5px;
-            width: auto;
-            height: auto;
-        }
-        h1, h2 {
-            margin: 0 5px; /* 修改代码：为标题添加一些空白 */
-            font-size: 20px;
-        }
-        main {
-            display: flex;
-            position: relative;
-            align-items: flex-start;
-            flex-direction: column;
-            padding: 5px 5px;
-            width: auto;
-            height: auto;
-            max-height: 100%;
-            max-width: 100%;
-            overflow: hidden;
-            /* border: 1px solid rgb(38, 16, 238);  */
-        }
-        main .div-main-title{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            /* justify-content: center; */
-        }
-        main button{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0px 10px;
-            padding: 0px 0px;
-            width: 26px;
-            height: 26px;
-            border-radius: 30%;
-            background-color: #b9bdc9;
-            border: none;
-            outline: none;
-            color: yellow;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease-out;
-        }
-        button:hover {
-            background-color: #26c1f0;
-            /* background-color: rgba(currentColor, 0.8, 0.2, 0.8); */
-        }
-        main .div-paper-container{
-            display: flex;
-            position: relative;
-            /*  主轴方向布局控制  */
-            justify-content: flex-end;  
-            flex-direction: column-reverse;
-            /*  交叉轴方向布局控制  */
-            align-items: center;
-            align-content: center;
-            
-            width: calc(100% - 20px);
-            height: 100%;
-            max-height: 100%;
-            max-width: 100%;
-            margin: 0px 10px;
-            padding: 10px 0px;
-            /* border: 1px solid rgb(81, 107, 78);  */
-        }
-        main .div-one-paper{
-            display: flex;
-            position: relative;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            /* align-content: center; */
-            flex-wrap: nowrap;
+        
+         /* Global Styles */
+:root{
+    --nav_menu_color: rgb(250, 163, 2);
+}
 
-            width: auto;
-            height: auto;
-            max-height: 100%;
-            max-width: 100%;
-            padding: 10px 0px;
-            /* border: 1px solid rgb(38, 76, 238);  */
-        }
-        /* 在元素内部设置分割线 */
-        main .div-one-paper::before{
-            content: "";
-            position: absolute;
-            /* z-index: 0; */
-            top: 0;
-            left: 0px; 
-            right: 0px;
-            height: 1px;
-            width: auto;
-            border-top: 1px solid rgb(221, 221, 221); 
-        }
-        /* 补第一个元素的分割线 */
-        .div-one-paper:first-child::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0px; 
-            right: 0px;
-            height: 1px;
-            width: auto;
-            border-top: 1px solid rgb(221, 221, 221); 
-        }
+body {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 
-        main .div-index{
-            display: flex;
-            flex: 0 0 40px; 
-            align-items: center;
-            justify-content: center;
-            padding: 10px 10px;
-
-            word-wrap: break-word;
-            /* border: 1px solid rgb(238, 76, 238);  */
-        }
-        main .div-index .a-index{
-            max-width: 40px;
-            white-space: pre-wrap;   /*  保留 空格  */
-            word-wrap: break-word;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            /* border: 1px solid rgb(238, 176, 238);  */
-        }
-        main .div-image{
-            display: flex;
-            flex-grow: 1;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
-            padding: 5px 5px;
-            /* height: 100%; */
-            /* width: auto; */
-            max-width: 120px;
-            max-height: 120px;
-            /*  不能设置最小值，会造成js代码的效果混乱  */
-            /* min-width: 30px; */
-            /* min-height: 30px; */
-            aspect-ratio: 1/1; 
-            color: rgb(109, 109, 109)
-            /* border: 1px solid rgb(165, 76, 4); */
-        }
-        main .div-image .image{
-            display: flexbox;
-            max-height: 100%;
-            aspect-ratio: 1/1; 
-            border-radius: 20%; 
-            width: 100%;
-            height: 100%;
-            /* max-width: 100%; */
-            /* max-height: 100%; */
-            object-fit: fill;
-            border: 1px solid rgb(170, 171, 172);
-        }
-        main .div-content{
-            display: flex;
-            flex-grow: 1;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-            width: auto;
-            height: auto;
-            margin-left: 10px;
-            padding: 10px 10px;
-            min-width: 500px;
-            max-width: 1100px;
-            word-wrap: break-word;
-            overflow: hidden; 
-            /* border: 1px solid rgb(238, 176, 238); */
-           
-        }
-        main .div-content  a{
-            max-width: 100%;
-            /*  white-space: nowrap; 属性时，文本将不会换行，而是会在一行中保持连续显示  */
-            white-space: normal;
-            /*  word-wrap: break-word; 单词超出宽度就换行 与  white-space: nowrap;  冲突 */
-            word-wrap: break-word;
-            font-size: 16px;
-            text-decoration: none;
-            text-overflow: ellipsis;
-            text-decoration: none;
-            overflow: hidden;
-        }
-        main .div-content .a-title{
-            margin: 6px 0px;
-            color: black;
-            font-size: 17px;
-            font-weight: bold;
-        }
-        main .div-content .div-journal{
-            display: inline-block;
-            /* flex-direction: column; */
-            /* align-items: flex-start; */
-            /* justify-content: left; */
-            word-wrap: break-word;
-        }
-        main .div-content .div-journal .a-journal-name{
-            font-style: italic;
-        }
-        main .div-content .div-journal .a-journal-cite,
-        main .div-content .div-journal .a-journal-doi:link{
-            color: rgb(48, 48, 48)
-        }
-        /* main .div-content .div-journal .a-journal-doi{
-            color: rgb(230, 6, 6); 
-        } */
-
-
-
-
+    margin: 0;
+    padding: 0;
+    min-height: 1000px;
+    min-width: 400px;
+    width: auto;  /* 根据当前浏览器窗口大小设置  */
+    height: auto;  /* 根据当前浏览器窗口大小设置  */
+     background-image:url( "../slideshow/img1.jpg");
+    /* z-index: 0; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 20px solid brown; 
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    align-content: space-around;
+    width: calc(100% - 14px);
+    height: 100px;
+    /* left: 3px; */
+    border: 7px solid rgb(50, 42, 165);
+}
+main div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: auto; */
+    height: 100%;
+    border: 7px solid rgb(42, 165, 89);
+}
     </style>
 </head>
 
 <body>
     <main>
-        <h1>Welcome to My Webpage</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien id faucibus porttitor, massa
-            tellus porttitor ligula, non molestie ipsum orci non nisl. Maecenas a sapien et enim pulvinar efficitur.</p>
-        <h2>About Us</h2>
-        <p>We are PhD candidates in the School of Mechanical and Automotive Engineering, 
-            South China University of Technology. This website is used for presentation of results. Thanks for watching!.</p>
-        <div class="div-main-title">
-            <h1>Project</h1>
-            <button onclick="disappear_images(this)" title="Hide or show the pictures in each row">
-                <span class="button-icon" aria-hidden="true">&#x2600;</span>
-                <!-- <span class="button-text">Hidden Picture</span> -->
-            </button>
+        <div class="test">是考虑范围放假哦i我就而发ipv分手快乐的方法对付结论是、
+
         </div>
-        <div class="div-paper-container">
-            <div class="div-one-paper">
-                <div class="div-index">
-                    <a class="a-index">1</a>
-                </div>
-                <div class="div-image">
-                    <img class="image" src="css/icon/personnal logo.jpg" alt="Image not found"></img>
-                </div>
-                <div class="div-content">
-                    <a class="a-author">J. Tang, Jiafu Wan(corresponding author) and D. Xia</a>
-                    <a class="a-title">Automobile Components Recognition based on Deep Learning Network with Coarse-Fine-Grained Feature Fusion,
-                        Automobile Components RCoarse-Fine-Grained Feature Fusion,
-                    </a>
-                    <div class="div-journal">
-                        <a class="a-journal-name">International Journal of Intelligent Systems, International Journal of Intelligent Systems,</a>
-                        <a class="a-journal-cite">vol. 19, no. 4, pp. 4058-4068, 2022.</a>
-                        <a class="a-journal-doi" href="#">DOI: 10.1109/TII.2022.3232766, 2023.</a>
-                    </div>
-                </div>
-            </div>
-            <div class="div-one-paper">
-                <div class="div-index">
-                    <a class="a-index">12</a>
-                </div>
-                <div class="div-image">
-                    <img class="image" src="slideshow/img1.jpg" alt="  Image not found"></img>
-                </div>
-                <div class="div-content">
-                    <a class="a-author">J. Tang, Jiafu Wan(corresponding author) and D. Xia</a>
-                    <a class="a-title">Automobile Components Recognition based on Deep Learning Network with Coarse-Fine-Grained Feature Fusion,
-                        
-                    </a>
-                    <div class="div-journal">
-                        <a class="a-journal-name">International Journal of Intelligent Systems, International Journal of Intelligent Systems,</a>
-                        <a class="a-journal-cite">vol. 19, no. 4, pp. 4058-4068, 2022.</a>
-                        <a class="a-journal-doi" href="#">DOI: 10.1109/TII.2022.3232766, 2023.</a>
-                    </div>
-                </div>
-            </div>
-            <div class="div-one-paper">
-                <div class="div-index">
-                    <a class="a-index">12345</a>
-                </div>
-                <div class="div-image">
-                    <img class="image" src="" alt="Image not found"></img>
-                </div>
-                <div class="div-content">
-                    <a class="a-author">J. Tang, Jiafu Wan(corresponding author) and D. Xia</a>
-                    <a class="a-title">Automobile Components Recognition based on Deep Learning Network with Coarse-Fine-Grained Feature Fusion,
-                        Automobile Components Recognition based on Deep Learning Network with Coarse-Fine-Grained Feature Fusion,
-                    </a>
-                    <div class="div-journal">
-                        <a class="a-journal-name">International Journal of Intelligent Systems, International Journal of Intelligent Systems,</a>
-                        <a class="a-journal-cite">vol. 19, no. 4, pp. 4058-4068, 2022.</a>
-                        <a class="a-journal-doi" href="#">DOI: 10.1109/TII.2022.3232766, 2023.</a>
-                    </div>
-                </div>
-            </div>
-            <script>
-                auto_format_row_height();
-            </script>
-        </div>
-        <script>
-            auto_resize_iframe_send();
-        </script>
     </main>
+        
 </body>
 
 </html>

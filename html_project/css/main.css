@@ -2,72 +2,78 @@
 :root{
     --nav_menu_color: rgb(250, 163, 2);
 }
-
-body {
-    font-family: Arial, sans-serif;
-    /* display: flex; */
-    /* align-items: center; */
-    /* flex-direction: column; */
-
-    margin: 0;
-    padding: 0;
-    min-height: 1000px;
-    min-width: 400px;
-    width: 100vw;  /* 根据当前浏览器窗口大小设置  */
-    height: 100vh;  /* 根据当前浏览器窗口大小设置  */
-     background-image:url( "../slideshow/img1.jpg");
-    /* z-index: 0; */
+body{
+    display: flex; 
+    flex-direction: column;
+    /* justify-content: space-around; */
+    align-items: stretch;
+    /* align-content: stretch; */
+    margin: 0px 0px;
+    padding: 0px 0px;
+    width: auto;
+    height: 100vh;
+    
+    background-image: url( "../slideshow/img1.jpg");
     background-size: cover;
-    /* background-repeat: no-repeat; */
+    /*  跟随页面移动，不会发送滚动  */
+    background-attachment: fixed; 
+    background-repeat: no-repeat;
 }
 
 /* Header Styles */
 header {
-    display: block;
+    display: flex;
+    flex: 0 0 auto;
     position: relative;
-    z-index: 99;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    z-index: 100;
+    /* width: 100%; */
+    /*  注意：有下拉菜单  不能隐藏   */
+    /* overflow: hidden; */
+    /* border: 1px solid rgb(4, 55, 165); */
 }
 /*  ----------------- 导航栏设计 -----------------------*/
 header .nav-menu {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(5, 117, 182);
     color: rgb(255, 255, 255);
+    margin: 0px 0px;
+    padding: 0px 10px;
+    /* padding-right: 50px; */
     height: 50px;
-    /* width: 100%; */
-    /* position: relative; */
-    display: flex;
-    justify-content: space-between;   /* space-between : 将导航栏左右两侧对齐  */
-    margin: auto;
-    align-items: center;
-    padding: 0px 0px;
-    padding-right: 10px;
-    /* 间隔距离 */
-    flex-direction: row;
+    width: auto;
+    /* border: 1px solid rgb(165, 76, 4); */
 }
 /*  logo 设计   */
-header .nav-menu .div-header-logo{
+header .div-header-logo{
     display: flex; /* 将 logo 和标题设置为弹性布局 */
-    align-items: center;   /*    居中*/
+    flex: 0 2 auto;
     flex-direction: row;
-    margin-right: auto;
-    z-index: 110;
-    width: 90%;
+    justify-content: flex-start;
+    align-items: center;   /*    居中*/
+    z-index: 100;
+    margin-left: 15px;
+    margin-right: 5px;
+    width: auto;
     height: 100%;
-    max-width: 400px; 
+    max-width: 380px; 
     min-width: 80px;
     white-space: nowrap;
-    /* border: 1px solid rgb(27, 8, 202); */
     font-size: 22px;
     font-weight: bold;
     font-family: '宋体'; 
     color: rgb(255, 255, 255);
     text-decoration: none;
-    padding-left: 20px ;
-    /* overflow: hidden; */
     /* block-size: auto; */
-     /* 禁止换行 */
      /* border: 1px solid rgb(114, 112, 133); */
 }
-header .nav-menu .div-header-logo img {
+header .div-header-logo img {
     width: auto;
     height: 100%;
     object-fit: contain;
@@ -89,39 +95,37 @@ header .nav-menu .div-header-logo img {
   }
 
 /*  以下是导航菜单的设计  */
-header .nav-menu .ul-menu {
+header .ul-menu {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     list-style: none;
     /*  外边距   */
-    padding: 0px 0px;
-    /*  内边距   */
-    width: auto;
+    margin: 0px 0px;
     margin-left: auto;
-    /*   右侧导航栏图标放大后，不会出现被隐藏   */
-    min-height: 100%;  
-
-    /* height: auto; */
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    /*  overflow: hidde 会造成下拉菜单无法显示 */
-    /* overflow: hidden; */
-    /* flex  inline-block */
-
+    /*  内边距   */
+    padding: 0px 0px;
+    width: auto;
+    /*  注意：有下拉菜单，注意高度限制  */
+    min-height: 80%;
+    /* border: 1px solid rgb(226, 191, 163); */
 }
 
-header .nav-menu .header-menu {
+header .header-menu {
+    display: flex;
+    position: relative;
     margin: 0px 0px;
     padding: 0px 5px;
     text-align: center;
-    position: relative;
-    flex-grow: 1;
     /* 均匀分为四等份，根据实际情况调整 */
-    /* width: 20%;  */
+    width: auto; 
     /* 边界距离 */
     /* border: 1px solid rgb(201, 219, 38); */
 }
-
-header nav.nav-menu .ul-menu a{
+/*  导航栏所有 a 对象的字体控制  */
+header .ul-menu a{
     font-weight: normal;
     margin: 0px 0px;
     padding: 0px 0px;
@@ -130,51 +134,36 @@ header nav.nav-menu .ul-menu a{
     font-size: 20px;
     /*  不允许换行，否者导航栏缩短会出现菜单变成多行 */
     white-space: nowrap;  
-    overflow: hidden;
+    /*  有动态下划线，不要隐藏  */
+    /* overflow: hidden; */
     /* border: 1px solid rgb(56, 38, 219); */
     
 }
 
-/*  添加下拉标识图标  */
-/* header nav.nav-menu li.header-menu::after {
-    content: "";
-    position: relative;
-    top: 50%;
-    right: -10px;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    background-image: url("arrow-icon.png");   替换为箭头图标的路径
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: red;
-    border-radius: 50%;
-  } */
-
 /*  导航栏内容格式设置  */
-header .nav-menu .ul-menu .header-menu > .menu {  /* a.menu  */
+header .header-menu > a.menu { 
     color: var(--nav_menu_color); /*rgb(250, 163, 2);*/
     text-decoration: none;
     position: relative;
-    margin: 0px 0px;
-    padding: 0px 5px;
+    margin: 0px 5px;
     /* font-family: "New Time Roman"; */
     font-size: 20px;
     font-weight: bold;
     transition: font-size 0.3s ease-in-out, color 0.2s ease-in-out;
 }
 
-header .nav-menu .ul-menu .header-menu > .menu:hover {
+header .header-menu > .menu:hover {
     font-size: 130%;
     color: #02fad1;
 }
 
-header .nav-menu .ul-menu .header-menu > .menu::after {
+header .header-menu > .menu::after {
     /* 导航按钮下方的彩色横线 */
     content: "";
+    display: flex;
     position: absolute;
-    bottom: -2px;
-    left: 0;
+    bottom: -3px;
+    /* left: 0; */
     width: 100%;
     height: 2px;
     max-height: 3px;
@@ -185,69 +174,125 @@ header .nav-menu .ul-menu .header-menu > .menu::after {
     /*  出现效果  */
 }
 
-header .nav-menu .ul-menu .header-menu > .menu:hover::after,
+header .header-menu > .menu:hover::after,
 /* 导航按钮下方的彩色横线：设置鼠标划过和点击的出现效果 */
-header .nav-menu .ul-menu .header-menu > .menu:focus::after 
+header .header-menu > .menu:focus::after 
 {
-    transform: scaleX(1);
+    transform: scaleX(1.0);
 }
 
-header nav .div-menu-key{
+
+header .ul-menu{
+    margin-right: 30px;
+}
+header .div-menu-key{
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 5px;
     /* min-height: 100%; */
     width: auto;
-    margin-left: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    /* border: 1px solid rgb(56, 38, 219); */
+    min-width: 50px;
+    min-height: 50px;
+    padding: 0px 0px;
+    margin-left: 0px;
+    margin-right: 10px;
+    
+    /* border: 1px solid rgb(224, 34, 9); */
     /* overflow: hidden; */
 }
-header nav .div-menu-key .header-svg-icon {
-    height: auto; 
-    padding: 0px 5px;
+header .a-header-svg-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 5px;
+    /* width: 100%; */
+    /* height: 100%;  */
+    padding: 0px 0px;
+    /* padding-left: 10px; */
     margin: 0px 0px;
     object-fit: contain;
     object-position: left; 
     cursor: pointer; 
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    /* border: 1px solid rgb(56, 38, 219); */
+    
+    /* border: 1px solid rgb(219, 38, 47); */
 }
-header nav .div-menu-key  .header-svg-icon:hover {
-    transform: scale(1.3); /* 将 SVG 图标放大 10% */
+header img.header-svg-icon{
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    object-position: center; 
+    cursor: pointer; 
     transition: transform 0.2s ease-in-out; /* 添加过渡效果 */
+}
+header img.header-svg-icon:hover {
+    transform: scale(1.5); /* 将 SVG 图标放大 10% */
+    
 }
 
 
 /* ------------- 下拉菜单设置 ---------------- */
-header .nav-menu .ul-menu ul {
-    list-style: none;
+
+/*  添加下拉标识图标  */
+header .dropdown-icon::after {
+    content: "\27A2";
+    display: flex;
+    position: relative;
+    /* margin-left: -5px; */
+    width: 16px;
+    height: 16px;
+    color: rgb(221, 221, 221);
+    transform: translate(-30%, 0%) rotateY(60deg);
+    -ms-transform: translate(-30%, 0%) rotateY(60deg); /* IE 9 */
+    -webkit-transform: translate(-30%, 0%) rotateY(60deg);  /* Safari and Chrome  */
+    transition: transform 0.2s ease-in-out; /* 添加过渡效果 */
+}
+header .header-menu:hover > .dropdown-icon::after{
+    transform: translate(10%, 60%) rotateX(50deg) rotate(90deg);
+    -ms-transform: translate(10%, 60%) rotateX(50deg) rotate(90deg); /* IE 9 */
+    -webkit-transform: translate(10%, 60%) rotateX(50deg) rotate(90deg);  /* Safari and Chrome  */
+    color: yellow;
+}
+
+header .ul-dropdown {
     display: none;
     position: absolute;
-    width: auto;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    list-style: none;
+    z-index: 101;
+    top: calc(100% + 10px);
+    width: 100%;
     height: auto;
     
-    z-index: 100;
-    margin: 10px 0px;
-    padding: 0px 0px;
+    margin: 0px 0px;
+    padding: 2px 0px;
     background-color: #fff;
     border: 1px solid #ccc;
     
 }
 
-header .nav-menu .ul-menu ul li {
-    /* width: 100%;
-    height: 100%; */
+header .ul-dropdown li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin: 0px 0px;
-    padding: 8px 10px;
+    padding: 6px 0px;
+    width: calc(100% - 8px);
     transition: background-color 0.2s ease-in-out;
     /* border: 1px solid rgb(56, 38, 219); */
 }
 
-header .nav-menu .ul-menu ul .menu {
+header .ul-dropdown .menu {
     margin: 0px 0px;
-    padding: 0px 10px;
+    padding: 0px 0px;
     color: rgb(8, 8, 8);
     text-decoration: none;
     position: relative;
@@ -257,11 +302,7 @@ header .nav-menu .ul-menu ul .menu {
     /* transition: font-size 0.3s ease-in-out, color 0.2s ease-in-out, font-weight 0.2s ease-in-out; */
 }
 
-/* header nav.nav-menu ul ul li :hover>ul {
-    display: block;
-} */
-
-header .nav-menu .ul-menu ul li:hover {
+header .ul-dropdown li:hover {
     /* font-size: 110%;
     color: #02fad1; */
     font-weight: bold;
@@ -270,6 +311,39 @@ header .nav-menu .ul-menu ul li:hover {
     text-decoration-color: green;
     /* border-bottom: 2px solid gold;  */  /*  列表的下划线，不是文字下划线  */
 }
+
+@media (max-width: 800px) {
+    header .ul-menu{
+        display: none;
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: stretch;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        margin-right: -20px;
+        transform: translateY(50px);
+        z-index: 100;
+        padding: 10px 20px;
+        background-color: rgb(28, 122, 177);
+    }
+    header .header-menu{
+        padding: 3px 10px;
+    }
+    header .ul-dropdown{
+        display: none;
+        transform: translateX(calc(-100% - 10px)) translateY(calc(-50%));
+    }
+    /*   header nav .div-menu-key .a-header-svg-icon   */
+    header .div-menu-key:hover .ul-menu{
+        display: block;
+        border: 2px solid rgb(44, 114, 161);
+    }
+} 
+
+
+
+
 
 
 
@@ -371,21 +445,22 @@ div.div-slideshow-container div.slider-dots .dot.active {
 
 
 
-
-
 /* ------------------  Main Content Styles   ---------------------------- */
 main {
-    max-width: 1480px;
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
     /*  这里的最小值需要兼容 其他界面 的最小值，否者iframe会出现水平滚动条  */
     min-width: 200px;
-    /* width: 100%; */
-    /* height: 100%; */
-    background-color: rgb(0, 163, 22);
-    margin: 0px auto;
-    padding: 20px;
-    z-index: 1; /* 将 <main> 设置在默认层叠顺序之上 */
+    width: calc(100% - 20px);
+    
+    margin: 0px 0px;
+    padding: 10px 10px;
     font-size: 0;
-    /* inline-size: 0; */
+    background-color: rgb(0, 163, 22);
     /* background-color: transparent; 设置背景透明 */
     /* opacity: 0.5; */
     overflow: hidden;
@@ -397,29 +472,25 @@ h1, h2 {
 }
 
 main .div-main-content{
+    display: flex;
+    position: relative;
     width: 100%;
-    min-width: 100%;
+    max-width: 1480px;
     height: 100%;
-    min-height: 100%;
     padding: 10px 10px;  
     margin: 0px 0px;
     box-sizing: border-box;
-    border: 1px solid rgb(221, 220, 228);
-    /* display: flex; */
-    position: relative;
+
     font-size: 0;
     overflow: hidden;
+    border: 1px solid rgb(179, 179, 180);
 }
 main #my_frame{
-    /* display: block; */
-    /* position: relative; */
+
     width: calc(100%);
     max-width: 100%;
     min-width: 100%;
-    /* vertical-align:top; */
-    /* vertical-align:text-top(text-bottom); */
-    /* top: 0; */
-    /* left: 0; */
+
     height: 100%;
     border: none;
     /*  iframe 读取链接时会传递自身尺寸信息，因此，需要把自身尺寸缩小，保证不会出现水平滚动条  */
@@ -431,27 +502,14 @@ main #my_frame{
     /* transform: scale(0.95); */
     /* border: 1px solid rgb(27, 8, 202); */
 }
-/* @media screen and (max-width: 800px) {
-    main .div-main-content{
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-        border: 1px solid rgb(27, 8, 202);
-        display:flex;
-    }
-    main #my_frame{
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: none;
-        padding: 0;
-        margin: 0;
-    }
-} */
 
 
 /* Footer Styles */
 footer {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    /* width: 100%; */
     background-color: #ccc;
     padding: 10px;
     text-align: center;

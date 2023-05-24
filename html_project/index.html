@@ -27,35 +27,43 @@
             <div class="div-header-logo" >
                 <a style="height: 100%; width: auto;" href="#">
                     <img src="css/icon/personnal logo.jpg" alt="setting"> </img>
-                    <a style="margin-left: 20px; overflow: hidden;">
+                    <a style="margin-left: 10px; overflow: hidden;">
                         Kingbiu's Personnel Website
                     </a>
                 </a>
             </div>
-            <ul class="ul-menu" >
-                <li class="header-menu flex-fill"><a class="menu" href="index.html">Home</a></li>
-                <li class="header-menu flex-fill"><a class="menu" href="paper.html" target="new_page">Papers</a></li>
-                <li class="header-menu flex-fill"><a class="menu" href="pro-patent.html" target="new_page">Patents</a></li>
-                 <li class="header-menu flex-fill"><a class="menu" href="test.html" 
-                    target="new_page">Test</a></li>
-                <li class="header-menu flex-fill"><a class="menu" onmouseover="dropdown_delay_disappear(event)">Projects</a>
-                    <ul class="dropdown">
-                        <li><a  class="menu" href="#" target="new_page">Team1</a></li>
-                        <li><a  class="menu" href="#" target="new_page">About1</a></li>
-                    </ul>
-                </li>
-                <li class="header-menu flex-fill"><a class="menu" onmouseover="dropdown_delay_disappear(event)">Contact</a>
-                    <ul class="dropdown">
-                        <li><a class="menu" href="#" target="new_page">Team2</a></li>
-                        <li><a class="menu" href="#" target="new_page">About2</a></li>
-                    </ul>
-                </li>
+            <div class="div-menu-key" >
+                <a class="a-header-svg-icon" href="#" >
+                    <!-- onclick="show_ul_menu(event);" -->
+                   <img class="header-svg-icon" src="css/icon/cog.svg" alt="setting"> </img>
+                   </a> 
+            
+                <ul class="ul-menu" >
+                    <li class="header-menu"><a class="menu" href="index.html">Home</a></li>
+                    <li class="header-menu"><a class="menu" href="paper.html" target="new_page">Papers</a></li>
+                    <li class="header-menu"><a class="menu" href="pro-patent.html" target="new_page">Patents</a></li>
+                    <li class="header-menu"><a class="menu" href="test.html" 
+                        target="new_page">Test</a></li>
+                    <li class="header-menu"><a class="menu" onmouseover="dropdown_delay_disappear(event)">Projects</a>
+                        <a class="dropdown-icon"></a>
+                        <ul class="ul-dropdown">
+                            <li><a  class="menu" href="#" target="new_page">Team1</a></li>
+                            <li><a  class="menu" href="#" target="new_page">About1</a></li>
+                        </ul>
+                    </li>
+                    <li class="header-menu"><a class="menu" onmouseover="dropdown_delay_disappear(event)">Contact</a>
+                        <a class="dropdown-icon"></a>
+                        <ul class="ul-dropdown">
+                            <li><a class="menu" href="#" target="new_page">Team2</a></li>
+                            <li><a class="menu" href="#" target="new_page">About2</a></li>
+                        </ul>
+                    </li>
+                    <!-- <a class="a-header-svg-icon" href="#" onclick="show_ul_menu(event);">
+                        <img class="header-svg-icon" src="css/icon/cog.svg" alt="setting"> </img>
+                        </a>  -->
+                    
+                </ul>
                 
-            </ul>
-            <div class="div-menu-key">
-                <a class="header-svg-icon" href="#">
-                    <img class="header-svg-icon" src="css/icon/cog.svg" alt="setting"> </img>
-                    </a> 
             </div>
 
         </nav>

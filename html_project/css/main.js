@@ -283,3 +283,41 @@ function get_win_size(params) {
     window.removeEventListener('resize', win_resize2, );
     window.addEventListener('resize', win_resize2, );
 }
+
+// 获取访问者的 IP 地址
+const getIPAddress = () => {
+    fetch('https://api.ipify.org/?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const ip_address = data.ip;
+        console.log(`您的 IP 地址是：${ip_address}`);
+      })
+      .catch(error => {
+        console.error('获取 IP 地址时出错：', error);
+      });
+  };
+getIPAddress();
+
+// 获取访问者的 Cookie
+const getCookie = (cookie_name) => {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(cookie_name + '=')) {
+        const cookie_value = cookie.substring(cookie_name.length + 1);
+        console.log(`您的 Cookie 值是：${cookie_value}`);
+        return cookie_value;
+      }
+    }
+    console.log('您还没有设置 Cookie。');
+  };
+getCookie('cookie_name');
+
+// 获取其他可用信息
+const userAgent = navigator.userAgent;
+console.log(`您的 User-Agent 为：${userAgent}`);
+const language = navigator.language;
+console.log(`您的语言设置为：${language}`);
+const screenWidth = window.screen.width;
+const screenHeight = window.screen.height;
+console.log(`您的屏幕分辨率为：${screenWidth}x${screenHeight}`);

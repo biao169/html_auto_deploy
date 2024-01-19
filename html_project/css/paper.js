@@ -72,7 +72,7 @@ function co_domain_message_send() {
     // var iframeHeight = document.documentElement.scrollHeight;
     // var iframeWidth = document.documentElement.scrollWidth;
     //  选用真实宽高
-    var offsetWidth = document.documentElement.offsetWidth; 
+    var offsetWidth = document.documentElement.offsetWidth+10;   // 这里需要根据元素的padding 10px补充差值
     var offsetHeight = document.documentElement.offsetHeight+10;
 
     // var data = { iframeHeight: iframeHeight, iframeWidth:iframeWidth }

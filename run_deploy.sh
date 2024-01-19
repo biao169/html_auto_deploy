@@ -335,6 +335,8 @@ set_conf_file_nginx(){
         
         if grep -q "server_name" ${Config_File}; then
             read -p "已配置有服务器，是否修改[Yes:1 | No:0]" Choise_change
+        else
+            echo ""
         fi
         if [ "$Choise_change" == "1" ]; then
             read -p "Enter your Domain URL: " Domain_url
@@ -342,6 +344,8 @@ set_conf_file_nginx(){
         else
             colorecho $YELLOW "正在使用的域名/网址是：${Domain_url}"
         fi
+    else
+        echo ""
     fi
     # root ${Download_Path}/${Project_Name}/html_project/;${new_row}\
       # 插入位置标记
@@ -369,6 +373,8 @@ ${new_row}\
             echo "配置已添加过，不能重复添加。"
             if [ "$Choise_change" == "1" ]; then
                 colorecho $RED "nginx已被配置过，请使用命令[vim ${Confile_File}]手动修改文件！"
+            else 
+                echo ""
             fi
         else
             # echo "目标字符不存在"

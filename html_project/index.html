@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 
 <head>
-    <title>Kingbiu Website</title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="aa.ico" type="image/x-icon">
+    <title>个人简历展示Jinbiao Tan</title>
+    <meta name="keywords" content="谭劲标，AI大牛，个人简历，Kingbiu乐园，Kingbiu Website，Jinbiaotan，劲标，
+    个人网站说明，技术牛人简介，免费使用ChatGPT，论文成果，项目成果，专利成果！" />
+    <meta name="Description" content="这里是Jinbiao Tan（谭劲标）的个人介绍，私人乐园，免费ChatGPT使用，ChatGPT教程，个人网站模版，网站示例" />
     <link rel="stylesheet" href="css/main.css" media="all">
     <script src="css/main.js"></script>
+    <!-- <meta http-equiv="refresh" content="5">   -->
 </head>
 
 <body>
@@ -23,6 +29,16 @@
             </script>
         </div>
 
+        <script>
+            // JavaScript代码，点击头部菜单时切换 .div-resume 的显示和隐藏
+            function toggleResume() {
+                var resumeDiv = document.querySelector('.div-resume');
+                console.log(resumeDiv)
+                resumeDiv.style.display = 'none';
+                // resumeDiv.style.display = resumeDiv.style.display === 'none'? 'block' : 'none'
+            }
+        </script>
+
         <nav class="nav-menu"  >
             <div class="div-header-logo" >
                 <a style="height: 100%; width: auto;" href="#">
@@ -40,9 +56,9 @@
             
                 <ul class="ul-menu" >
                     <li class="header-menu"><a class="menu" href="index.html">Home</a></li>
-                    <li class="header-menu"><a class="menu" href="paper.html" target="new_page">Papers</a></li>
-                    <li class="header-menu"><a class="menu" href="pro-patent.html" target="new_page">Patents</a></li>
-                    <li class="header-menu"><a class="menu" href="test.html" 
+                    <li class="header-menu"><a class="menu" href="paper.html" target="new_page" onclick="toggleResume()">Papers</a></li>
+                    <li class="header-menu"><a class="menu" href="pro-patent.html" target="new_page" onclick="toggleResume()">Patents</a></li>
+                    <li class="header-menu"><a class="menu" href="test.html" onclick="toggleResume()" 
                         target="new_page">Test</a></li>
                     <li class="header-menu"><a class="menu" onmouseover="dropdown_delay_disappear(event)">Projects</a>
                         <a class="dropdown-icon"></a>
@@ -72,13 +88,25 @@
 
     <main id="main-content">
         <div class="div-main-content" >
-            <iframe name="new_page" id="my_frame" src="" allowfullscreen="true" frameborder=0
+            <div class="div-resume" id="kingbiu-detail">
+                <h1>个人简历</h1>
+                <p>Jinbiao Tan长期从事人工智能、深度学习技术方面的研究，主要研究领域包括：智能制造，设备智能，大数据，故障诊断，图像处理。</p>
+                <h2>特长</h2>
+                <p>擅长python、C、C++等编程，熟练掌握office软件；运动方面：羽毛球，兵乓球。</p>
+                <h2>兴趣</h2>
+                <p>热爱钻研，喜欢应用智能算法解决工程实际问题。</p>
+                <p>喜欢研究人工智能技术，图像处理与分析，大数据应用等知识。喜欢玩嵌入式，智能家居；喜欢游泳。</p>
+            </div>
+            <iframe name="new_page" id="my_frame" src="" allowfullscreen="true" frameborder=0 title="content-container"
             onload=""
-            ></iframe style="overflow: hidden;">
+            >
+            </iframe style="overflow: hidden;">
         </div>
+
         <script>
             auto_resize_iframe_recv(event);
         </script>
+        
     </main>
 
     <footer>

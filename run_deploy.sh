@@ -10,6 +10,7 @@ PLAIN='\033[0m'
 
 Download_Path="/usr/"
 Deploy_Path="/var/www/html/"
+Project_Name="html_auto_deploy"
 EXIST_Servie="null"
 Client="1"
 checkSystem() {
@@ -95,6 +96,8 @@ start_choice(){
     else
         echo "   6: nginx"
     fi
+    echo "--------" 
+    echo "   7: uninstall all. [delete: html+python+tempFile]"
     
     echo ""
 
@@ -223,14 +226,15 @@ install_Git(){
 }
 
 download_html_files(){
-    echo "download at：${pwd}"
+    echo "download at path=${PWD}"
     # 克隆 GitHub 仓库到指定目录
-    sudo rm -rf "html_auto_deploy"
+    Project_Name="html_auto_deploy"
+    sudo rm -rf "${Project_Name}"
     git clone https://github.com/biao169/html_auto_deploy.git
 
     # 检查克隆是否成功
     if [ $? -eq 0 ]; then
-        colorecho $GREEN "html files download successful. in: ${pwd}"
+        colorecho $GREEN "html files download successful. in: ${PWD}"
     else
         colorecho $RED "网页文件下载失败，请检查仓库 URL 是否正确。"
         exit 1
@@ -241,13 +245,13 @@ move_html_files(){
      # 创建存放网页文件的目录
     # sudo mkdir "$Download_Path"
 
-    echo "move：[$pwd/html_auto_deploy] to [$Download_Path]"
+    echo "move：[$PWD/${Project_Name}] to [$Download_Path]"
     # 1. 复制 HTML 文件和相关资源到部署目录
-    sudo rm -rf "$Download_Path/html_auto_deploy"
-    sudo mv "html_auto_deploy/" "$Download_Path"
+    sudo rm -rf "$Download_Path/${Project_Name}"
+    sudo mv "${Project_Name}/" "$Download_Path"
 
-    echo "copy: [$Download_Path/html_auto_deploy/html_project/] to [$Deploy_Path]"
-    sudo cp -r "$Download_Path/html_auto_deploy/html_project/." $Deploy_Path
+    echo "copy: [$Download_Path/${Project_Name}/html_project/] to [$Deploy_Path]"
+    sudo cp -r "$Download_Path/${Project_Name}/html_project/." $Deploy_Path
 
     # 检查是否成功
     if [ $? -eq 0 ]; then
@@ -324,7 +328,21 @@ show_successful_config_nginx(){
 # 配置文件路径
 Config_File="/etc/nginx/nginx.conf" 
 set_conf_file_nginx(){
-    
+
+    Domain_url = "kingbiu.com"
+    if [ -f "$Config_File" ]; then
+        Choise_change="1"
+        if grep -q "server_name" ${Config_File}; then
+            read -p "已配置有服务器，是否修改[Yes:1 | No:0]" Choise_change
+        fi
+        if [ "$Choise_change" == "1" ]; then
+            read -p "Enter your Domain URL: " Domain_url
+            colorecho $YELLOW "你输入的网址/链接是：${Domain_url}"
+        else
+            colorecho $YELLOW "正在使用的域名/网址是：${Domain_url}"
+        fi
+    fi
+    # root ${Download_Path}/${Project_Name}/html_project/;${new_row}\
       # 插入位置标记
     Insert_Marker="http {"
     new_row=$"\n\t"
@@ -333,9 +351,9 @@ set_conf_file_nginx(){
         listen 80;${new_row}\
         listen [::]:80;${new_row}\
 ${new_row}\
-        server_name Kingbiu;${new_row}\
+        server_name ${Domain_url};${new_row}\
 ${new_row}\
-        root ${Download_Path}/html_auto_deploy/html_project/;${new_row}\
+        root ${Deploy_Path};${new_row}\
         index index.html;${new_row}\
 ${new_row}\
         location / {${new_row}\
@@ -343,9 +361,10 @@ ${new_row}\
         }${new_row}\
     }${new_row}    # 新添加的内容到此结束 ${new_row}\
     "
-        # 检查配置文件是否存在
+
+    # 检查配置文件是否存在
     if [ -f "$Config_File" ]; then
-        if grep -q "server" ${Config_File}; then
+        if grep -q "server_name" ${Config_File}; then
             echo "配置已添加过，不能重复添加。"
         else
             # echo "目标字符不存在"
@@ -393,6 +412,18 @@ reset_conf_file_nginx(){
         echo "恢复失败: $Config_File，请恢复，可执行指令：[ sudo mv ${Config_File}.backup ${Config_File} ] "
         exit 1
     fi
+}
+
+
+uninstall(){
+    colorecho $YELLOW"removeing: $Deploy_Path"
+    sudo rm -rf "$Deploy_Path"
+
+    colorecho $YELLOW"removeing: $Download_Path/${Project_Name}"
+    sudo rm -rf "$Download_Path/${Project_Name}"
+    
+    reset_conf_file_nginx
+    restart_Nginx
 }
 
 # 执行部署步骤...

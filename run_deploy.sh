@@ -330,8 +330,9 @@ Config_File="/etc/nginx/nginx.conf"
 set_conf_file_nginx(){
 
     Domain_url = "kingbiu.com"
+    Choise_change="1"
     if [ -f "$Config_File" ]; then
-        Choise_change="1"
+        
         if grep -q "server_name" ${Config_File}; then
             read -p "已配置有服务器，是否修改[Yes:1 | No:0]" Choise_change
         fi
@@ -366,6 +367,8 @@ ${new_row}\
     if [ -f "$Config_File" ]; then
         if grep -q "server_name" ${Config_File}; then
             echo "配置已添加过，不能重复添加。"
+            if [ "$Choise_change" == "1" ]; then
+            colorecho $RED "nginx已被配置过，请使用命令[vim ${Confile_File}]手动修改文件！"
         else
             # echo "目标字符不存在"
 

@@ -329,7 +329,7 @@ show_successful_config_nginx(){
 Config_File="/etc/nginx/nginx.conf" 
 set_conf_file_nginx(){
 
-    Domain_url = "kingbiu.com"
+    Domain_url="kingbiu.com"
     Choise_change="1"
     if [ -f "$Config_File" ]; then
         

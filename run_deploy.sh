@@ -368,7 +368,8 @@ ${new_row}\
         if grep -q "server_name" ${Config_File}; then
             echo "配置已添加过，不能重复添加。"
             if [ "$Choise_change" == "1" ]; then
-            colorecho $RED "nginx已被配置过，请使用命令[vim ${Confile_File}]手动修改文件！"
+                colorecho $RED "nginx已被配置过，请使用命令[vim ${Confile_File}]手动修改文件！"
+            fi
         else
             # echo "目标字符不存在"
 

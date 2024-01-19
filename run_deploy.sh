@@ -345,7 +345,7 @@ ${new_row}\
     "
         # 检查配置文件是否存在
     if [ -f "$Config_File" ]; then
-        if grep -q "Kingbiu" ${Config_File}; then
+        if grep -q "server" ${Config_File}; then
             echo "配置已添加过，不能重复添加。"
         else
             # echo "目标字符不存在"

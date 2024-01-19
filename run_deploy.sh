@@ -334,7 +334,7 @@ set_conf_file_nginx(){
     if [ -f "$Config_File" ]; then
         
         if grep -q "server_name" ${Config_File}; then
-            read -p "已配置有服务器，是否修改[Yes:1 | No:0]" Choise_change
+            read -p "已配置有服务器，是否修改[Yes:1 | No:0]: " Choise_change
         else
             echo ""
         fi

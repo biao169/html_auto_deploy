@@ -76,7 +76,7 @@
              var targetUrl = 'http://www.youtube.com';
  
              // 构建完整的代理地址
-             var proxyUrl = 'https://' + proxyAddress + ':' + proxyPort + '/proxy?url=' + encodeURIComponent(targetUrl);
+             var proxyUrl = 'https://' + proxyAddress + '/proxy?url=' + encodeURIComponent(targetUrl);
  
              // 使用 fetch 发起请求
              fetch(proxyUrl)

@@ -60,9 +60,42 @@
             /* justify-content: center; */
             /* width: auto; */
             height: 100%;
-            /* border: 7px solid rgb(42, 165, 89); */
+            border: 7px solid rgb(42, 165, 89);
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <script>
+         function makeProxyRequest() {
+             // 代理服务器的地址和端口
+             var proxyAddress = 'www.kingbiu-ai-lab.online';
+             var proxyPort = 80;
+ 
+             // 目标网站的地址
+             var targetUrl = 'http://www.youtube.com';
+ 
+             // 构建完整的代理地址
+             var proxyUrl = 'http://' + proxyAddress + ':' + proxyPort + '/proxy?url=' + encodeURIComponent(targetUrl);
+ 
+             // 使用 fetch 发起请求
+             fetch(proxyUrl)
+                 .then(response => {
+                     if (!response.ok) {
+                         throw new Error('Network response was not ok');
+                     }
+                     return response.text();
+                 })
+                 .then(data => {
+                     // 显示代理请求的结果
+                     document.getElementById('proxyResult').innerText = 'Proxy Response: ' + data;
+                 })
+                 .catch(error => {
+                     // 处理错误
+                     console.error('There has been a problem with your fetch operation:', error);
+                 });
+         }
+     </script>
 </head>
 
 <body>
@@ -74,14 +107,19 @@
             这是私人网站测试，这是旨在服务于科研。请不要用于非法用途！感谢您的配合！
         </p>
     </nav>
+    <!-- 发起代理请求的按钮 -->
+    <button onclick="makeProxyRequest()">Make Proxy Request</button>
     <main>
-        <div class="test">
-            <iframe name="ai_chat_web" id="ai_chat_web_id" allowfullscreen="true" frameborder=0 title="content-container"
-            onload="" src="https://www.youtube.com/" width="100%" height="100%" style="border:none;" scrolling="yes" crossorigin="anonymous"
+        <div class="test" id="proxyResult">
+            <!-- <iframe name="ai_chat_web" id="ai_chat_web_id" allowfullscreen="true" frameborder=0 title="content-container"
+            onload="" src="https://www.youtube.com/" width="100%" height="100%" style="border:none;" scrolling="yes" 
+            crossorigin="anonymous" title="YouTube video player" frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
             onload="postMessage('username:password', 'https://www.youtube.com/')"
             >
+            </iframe> -->
             <!-- https://gemini.google.com  -->
-            </iframe>
         </div>
     </main>
         
